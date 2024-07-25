@@ -20,7 +20,7 @@ st.title("Hello!")
 llm= ChatGroq(groq_api_key= groq_api_key,
               model_name= "Llama-3.1-8b-Instant")
 
-embedd= HuggingFaceEmbeddings(
+huggingface_embedding= HuggingFaceEmbeddings(
      model_name= ("sentence-transformers/all-mpnet-base-v2"),
     model_kwargs={'device':'cpu'},
     encode_kwargs={'normalize_embeddings':True}
@@ -41,7 +41,7 @@ prompt= ChatPromptTemplate.from_template(
 
 def vector_embedding():
     if 'vectors' not in st.session_state:
-        st.session_state.embeddings= embedd()
+        st.session_state.embeddings=  huggingface_embedding
         st.session_state.loader= PyPDFDirectoryLoader("data\\")
         st.session_state.docs= st.session_state.loader.load()
         st.session_state.text_splitter= RecursiveCharacterTextSplitter(chunk_size= 1000, chunk_overlap=200)
