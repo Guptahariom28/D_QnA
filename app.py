@@ -40,15 +40,13 @@ prompt= ChatPromptTemplate.from_template(
 )
 
 def vector_embedding():
-  
     if 'vectors' not in st.session_state:
-      
-        st.session_state.embeddings=  huggingface_embedding
+        st.session_state.embeddings= huggingface_embedding
         st.session_state.loader= PyPDFDirectoryLoader("data\\")
         st.session_state.docs= st.session_state.loader.load()
         st.session_state.text_splitter= RecursiveCharacterTextSplitter(chunk_size= 1000, chunk_overlap=200)
         st.session_state.final_doc= st.session_state.text_splitter.split_documents(st.session_state.docs)
-        st.session_state.vectors= FAISS.from_documents(st.session_state.final_docs, st.session_state.embeddings)
+        st.session_state.vectors= FAISS.from_documents(st.session_state.final_doc, st.session_state.embeddings)
 
 if st.button("Click here to start"):
     vector_embedding()
