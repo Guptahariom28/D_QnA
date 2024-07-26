@@ -58,10 +58,10 @@ prompt1= st.text_input("Enter the Question from the Document")
 if prompt1:
     
     document_chain= create_stuff_documents_chain(llm, prompt)
-    retriever= st.session_state.vectors.as_retriever()
+    retriever= st.session_state.vectors.as_retriever(search_type="similarity",search_kwargs={"k":3})
     retrieval_chain= create_retrieval_chain(retriever, document_chain)
-    responde= retrieval_chain(invoke('input', prompt1))
-    st.write(rresponse['answer'])
+    responde= retrieval_chain.run('input', prompt1)
+    st.write(responde['answer'])
     with st.expander("Document Similarity Search"):
         for i, doc in enumerate(response["context"]):
             st.write(doc.page_content)
